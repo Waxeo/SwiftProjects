@@ -12,6 +12,7 @@ struct HomeView: View {
         VStack {
             HStack {
                 Text("Hello, world!")
+                
             }
             HStack {
                 Button("Click Me") {

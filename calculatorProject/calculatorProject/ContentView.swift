@@ -5,6 +5,8 @@
 //  Created by Matteo Gauvrit on 29/07/2024.
 //
 
+// Crash -- Si je fais 9 + . / le . s'ajoute au + et du coup au lieu de remplacer le + par le / il l'ajoute et a = ça crash pour mauvais index
+
 import SwiftUI
 
 struct HomeView: View {
@@ -101,7 +103,9 @@ struct ButtonGrid: View {
                                     }
                                 case "=":
                                     index = 0
-                                    res = calculExpression(&expression, index)
+                                    res = calculExpression(&expression, &index)
+                                    index = 0
+                                    expression.removeAll()
                                 default:
                                     completeExpression(buttonTitle, &expression, &index)
                             }
@@ -181,7 +185,7 @@ struct ButtonGrid: View {
             
         } else if buttonTitle == "." {
             
-            if expression.isEmpty || expression.last!.contains(".") {
+            if expression.isEmpty || expression.last!.contains(".") || !isNumber(expression.last!) {
                 print("Cannot add '.' here")
             } else {
                 expression[expression.count - 1] += buttonTitle
@@ -204,11 +208,9 @@ struct ButtonGrid: View {
 
     
     // Calcul
-    func calculExpression(_ expression : inout [String], _ index : Int) -> String {
+    func calculExpression(_ expression : inout [String], _ index: inout Int) -> String {
         let dic1: [String] = ["/", "*"]
         let dic2: [String] = ["+", "-"]
-//        let maxDouble = Double.greatestFiniteMagnitude
-//        let minDouble = -Double.greatestFiniteMagnitude
         var left: Double = 0
         var right: Double = 0
         var tmp: Double = 0
@@ -217,6 +219,8 @@ struct ButtonGrid: View {
         // Vérification de la validité de l'expression
         guard expression.count >= 3 else {
             print("Expression is incomplete.")
+            index = 0
+            expression.removeAll()
             return "0"
         }
         
