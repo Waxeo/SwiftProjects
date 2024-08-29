@@ -13,11 +13,12 @@ import Foundation
 
 struct HomeView: View {
     
-    @StateObject private var locationManager = LocationManager()
+    @ObservedObject private var locationManager = LocationManager()
     @State private var suggestions: [City] = []
     @State private var inputText: String = ""
     @State private var latitude: Double = 0
-    @State private var longitude: Double = 0
+    private var retErr: Int = 0
+
 
     var body: some View {
         
@@ -34,14 +35,16 @@ struct HomeView: View {
                     }
                 
                 Button(action: {
-                    if let location = locationManager.location {
-                        inputText = "My position"
-                        latitude = location.coordinate.latitude
-                        longitude = location.coordinate.longitude
-                    } else if locationManager.authorizationStatus == .denied {
-                        print("Accès à la localisation refusé. Veuillez activer la localisation dans les réglages.")
+                    locationManager.requestLocation()
+                    if (locationManager.cityLocation != nil) {
+                        print("Geolocation pressed and cityLocation exist !")
+                        Task {
+                            let cityInfoFetching = await fetchCityInfo(city: locationManager.cityLocation!)
+                            locationManager.cityInfo = cityInfoFetching
+                        }
                     } else {
-                        print("Localisation non disponible.")
+                        
+                        print("Geolocation pressed but cityLocation not exist !")
                     }
                 }) {
                     Image(systemName: "location.viewfinder")
@@ -53,11 +56,14 @@ struct HomeView: View {
             HStack {
                 if !suggestions.isEmpty {
                     List(suggestions) { city in
-                        Text(city.name + ", " + city.admin1 + ", " + city.country)
+                        let name = "\(city.name), \(city.admin1), \(city.country)"
+                        Text(name)
                             .onTapGesture {
-                                inputText = city.name + ", " + city.admin1 + ", " + city.country
-                                latitude = city.latitude
-                                longitude = city.longitude
+                                Task {
+                                    let cityInfoFetching = await fetchCityInfo(city: city)
+                                    locationManager.cityInfo = cityInfoFetching
+                                }
+                                inputText = ""
                                 suggestions.removeAll()
                             }
                     }
@@ -68,17 +74,17 @@ struct HomeView: View {
             Spacer()
             
             TabView {
-                CurrentlyView(location: inputText, latitude: latitude, longitude: longitude)
+                CurrentlyView(cityInfo: locationManager.cityInfo)
                     .tabItem {
                         Image(systemName: "thermometer.sun")
                         Text("Currently")
                     }
-                TodayView(inputText : $inputText)
+                TodayView(cityInfo: locationManager.cityInfo)
                     .tabItem {
                         Image(systemName: "calendar.day.timeline.trailing")
                         Text("Today")
                     }
-                WeeklyView(inputText : $inputText)
+                WeeklyView(cityInfo: locationManager.cityInfo)
                     .tabItem {
                         Image(systemName: "calendar.circle")
                         Text("Weekly")
@@ -93,4 +99,5 @@ struct HomeView_Previews: PreviewProvider {
         HomeView()
     }
 }
+
 

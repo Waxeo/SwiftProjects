@@ -5,33 +5,30 @@
 //  Created by Matteo Gauvrit on 14/08/2024.
 //
 
-import SwiftUI
-import MapKit
-import CoreLocationUI
 import Foundation
 
 // Structure pour récuperer la réponse JSON de l'api Geocoding
 struct City: Codable, Identifiable {
-    let id: Int
-    let name: String
-    let latitude: Double
-    let longitude: Double
-    let elevation: Double?
-    let featureCode: String
-    let countryCode: String
-    let admin1ID: Int
-    let admin2ID: Int?
-    let admin3ID: Int?
-    let admin4ID: Int?
-    let timezone: String
-    let population: Int?
-    let postcodes: [String]?
-    let countryID: Int
-    let country: String
-    let admin1: String
-    let admin2: String?
-    let admin3: String?
-    let admin4: String?
+    var id: Int
+    var name: String
+    var latitude: Double
+    var longitude: Double
+    var elevation: Double?
+    var featureCode: String
+    var countryCode: String
+    var admin1ID: Int
+    var admin2ID: Int?
+    var admin3ID: Int?
+    var admin4ID: Int?
+    var timezone: String
+    var population: Int?
+    var postcodes: [String]?
+    var countryID: Int
+    var country: String
+    var admin1: String
+    var admin2: String?
+    var admin3: String?
+    var admin4: String?
     
     // Enum pour mapper les noms des clés JSON aux propriétés Swift
     enum CodingKeys: String, CodingKey {
@@ -46,6 +43,50 @@ struct City: Codable, Identifiable {
         case countryID = "country_id"
         case country, admin1, admin2, admin3, admin4
     }
+    
+    init(
+        id: Int = 0,
+        name: String = "Unknown",
+        latitude: Double = 0.0,
+        longitude: Double = 0.0,
+        elevation: Double? = nil,
+        featureCode: String = "",
+        countryCode: String = "",
+        admin1ID: Int = 0,
+        admin2ID: Int? = nil,
+        admin3ID: Int? = nil,
+        admin4ID: Int? = nil,
+        timezone: String = "UTC",
+        population: Int? = nil,
+        postcodes: [String]? = nil,
+        countryID: Int = 0,
+        country: String = "Unknown",
+        admin1: String = "Unknown",
+        admin2: String? = nil,
+        admin3: String? = nil,
+        admin4: String? = nil
+    ) {
+        self.id = id
+        self.name = name
+        self.latitude = latitude
+        self.longitude = longitude
+        self.elevation = elevation
+        self.featureCode = featureCode
+        self.countryCode = countryCode
+        self.admin1ID = admin1ID
+        self.admin2ID = admin2ID
+        self.admin3ID = admin3ID
+        self.admin4ID = admin4ID
+        self.timezone = timezone
+        self.population = population
+        self.postcodes = postcodes
+        self.countryID = countryID
+        self.country = country
+        self.admin1 = admin1
+        self.admin2 = admin2
+        self.admin3 = admin3
+        self.admin4 = admin4
+    }
 }
 
 // Modèle pour la réponse complète
@@ -56,13 +97,24 @@ struct CityResponse: Codable {
 struct CityInfo: Codable {
     // CITY
     var city: City?
-    
     // CURRENT TAB
     var current: CurrentData?
     // TODAY TAB
     var hourly: HourlyData?
     // WEEKLY TAB
     var daily: WeeklyData?
+    
+    init(
+        city: City? = nil,
+        current: CurrentData? = nil,
+        hourly: HourlyData? = nil,
+        daily: WeeklyData? = nil
+    ) {
+        self.city = city
+        self.current = current
+        self.hourly = hourly
+        self.daily = daily
+    }
 }
 
 struct CurrentData: Codable {
@@ -71,6 +123,20 @@ struct CurrentData: Codable {
     var is_day: Int8
     var weather_code: Int8
     var wind_speed_10m: Double
+    
+    init(
+        time: String = "",
+        temperature_2m: Double = 0.0,
+        is_day: Int8 = 0,
+        weather_code: Int8 = 0,
+        wind_speed_10m: Double = 0.0
+    ) {
+        self.time = time
+        self.temperature_2m = temperature_2m
+        self.is_day = is_day
+        self.weather_code = weather_code
+        self.wind_speed_10m = wind_speed_10m
+    }
 }
 
 struct HourlyData: Codable {
@@ -78,6 +144,18 @@ struct HourlyData: Codable {
     var temperature_2m: Array<Double>
     var weather_code: Array<Int8>
     var wind_speed_10m: Array<Double>
+    
+    init(
+        time: [String] = [],
+        temperature_2m: [Double] = [],
+        weather_code: [Int8] = [],
+        wind_speed_10m: [Double] = []
+    ) {
+        self.time = time
+        self.temperature_2m = temperature_2m
+        self.weather_code = weather_code
+        self.wind_speed_10m = wind_speed_10m
+    }
 }
 
 struct WeeklyData: Codable {
@@ -85,8 +163,19 @@ struct WeeklyData: Codable {
     var weather_code: Array<Int8>
     var temperature_2m_max: Array<Double>
     var temperature_2m_min: Array<Double>
+    
+    init(
+        time: [String] = [],
+        weather_code: [Int8] = [],
+        temperature_2m_max: [Double] = [],
+        temperature_2m_min: [Double] = []
+    ) {
+        self.time = time
+        self.weather_code = weather_code
+        self.temperature_2m_max = temperature_2m_max
+        self.temperature_2m_min = temperature_2m_min
+    }
 }
-
 
 struct WeatherInfo {
     let dayDescription: String
