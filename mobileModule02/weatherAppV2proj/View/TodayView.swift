@@ -20,10 +20,20 @@ import SwiftUI
 struct TodayView: View {
         
     var cityInfo: CityInfo?
+    var hasFetchedData: Bool
 
+//    Trois possibilitées:
+//    - l'utilisateur n'a pas encore fetch des données, auquel cas pas de data mais un petit message pour demander a chercher une location
+//    - il a cherché et tout s'est bien passé auquel cas on affiche les données
+//    - il a bien cherché, MAIS le fetch a eu un soucis, message d'erreur - lié a connexion internet
+    
     var body: some View {
         VStack {
-            if (cityInfo?.city != nil && cityInfo?.current != nil) {
+            if hasFetchedData == false {
+                Text("Please search for a city or enable geolocation.")
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+            } else if (cityInfo?.city != nil && cityInfo?.current != nil) {
                 HStack {
                     Image(systemName: "mappin.and.ellipse")
                         .renderingMode(.original)
@@ -64,9 +74,11 @@ struct TodayView: View {
                 
                 Spacer()
                 
-            }
-            else {
-                Text("Invalid data")
+            } else {
+                Text("Failed to fetch data.\nPlease check your internet connection.")
+                    .background(Color.red)
+                    .cornerRadius(8)
+                    .multilineTextAlignment(.center)
             }
         }
     }

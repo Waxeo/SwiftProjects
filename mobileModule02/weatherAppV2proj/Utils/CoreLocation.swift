@@ -14,12 +14,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     //    @Published var location: CLLocationCoordinate2D?
     @Published var cityLocation: City?
     @Published var cityInfo: CityInfo?
+    @Published var hasFetchedData = false
     
-    @Published var isFetchingCity = false
     private var userLocStatus: CLAuthorizationStatus?
-    
     static let shared = LocationManager()
-    
     private var locationManager = CLLocationManager()
     
     override init() {
@@ -27,6 +25,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
+    }
+    
+    func retuserLocStatus() -> CLAuthorizationStatus? {
+        return userLocStatus
     }
     
     func requestLocation() {

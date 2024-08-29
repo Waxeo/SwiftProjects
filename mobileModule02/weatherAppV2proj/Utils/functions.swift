@@ -73,7 +73,7 @@ func fetchCityInfo(city: City) async -> CityInfo? {
         cityInfo.current = decodedResponse.current
         cityInfo.hourly = decodedResponse.hourly
         cityInfo.daily = decodedResponse.daily
-
+        
         return cityInfo
         
     } catch {

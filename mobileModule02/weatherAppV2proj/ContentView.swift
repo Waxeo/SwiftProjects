@@ -16,9 +16,8 @@ struct HomeView: View {
     @ObservedObject private var locationManager = LocationManager()
     @State private var suggestions: [City] = []
     @State private var inputText: String = ""
-    @State private var latitude: Double = 0
-    private var retErr: Int = 0
-
+    @State private var showingAlert = false
+    @State var hasFetchedData: Bool = false
 
     var body: some View {
         
@@ -36,14 +35,20 @@ struct HomeView: View {
                 
                 Button(action: {
                     locationManager.requestLocation()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        // Check the authorization status after a short delay
+                        if let status = locationManager.retuserLocStatus(), status == .denied || status == .restricted {
+                            showingAlert = true
+                        }
+                    }
                     if (locationManager.cityLocation != nil) {
                         print("Geolocation pressed and cityLocation exist !")
                         Task {
                             let cityInfoFetching = await fetchCityInfo(city: locationManager.cityLocation!)
                             locationManager.cityInfo = cityInfoFetching
                         }
+                        hasFetchedData = true
                     } else {
-                        
                         print("Geolocation pressed but cityLocation not exist !")
                     }
                 }) {
@@ -52,6 +57,18 @@ struct HomeView: View {
                         .foregroundColor(.blue)
                 }
                 .padding()
+                .alert(isPresented: $showingAlert) {
+                    Alert(
+                        title: Text("Location Disabled"),
+                        message: Text("Your location services are disabled or restricted. Please enable them in the settings."),
+                        primaryButton: .default(Text("Settings")) {
+                            if let url = URL(string: UIApplication.openSettingsURLString) {
+                                UIApplication.shared.open(url)
+                            }
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
             }
             HStack {
                 if !suggestions.isEmpty {
@@ -74,17 +91,17 @@ struct HomeView: View {
             Spacer()
             
             TabView {
-                CurrentlyView(cityInfo: locationManager.cityInfo)
+                CurrentlyView(cityInfo: locationManager.cityInfo, hasFetchedData: hasFetchedData)
                     .tabItem {
                         Image(systemName: "thermometer.sun")
                         Text("Currently")
                     }
-                TodayView(cityInfo: locationManager.cityInfo)
+                TodayView(cityInfo: locationManager.cityInfo, hasFetchedData: hasFetchedData)
                     .tabItem {
                         Image(systemName: "calendar.day.timeline.trailing")
                         Text("Today")
                     }
-                WeeklyView(cityInfo: locationManager.cityInfo)
+                WeeklyView(cityInfo: locationManager.cityInfo, hasFetchedData: hasFetchedData)
                     .tabItem {
                         Image(systemName: "calendar.circle")
                         Text("Weekly")

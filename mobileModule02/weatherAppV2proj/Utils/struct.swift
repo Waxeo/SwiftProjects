@@ -103,7 +103,7 @@ struct CityInfo: Codable {
     var hourly: HourlyData?
     // WEEKLY TAB
     var daily: WeeklyData?
-    
+
     init(
         city: City? = nil,
         current: CurrentData? = nil,
