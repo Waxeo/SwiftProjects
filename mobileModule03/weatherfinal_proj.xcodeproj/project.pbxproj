@@ -19,6 +19,7 @@
 		2F8C6F772C80F64100F83FF3 /* CurrentlyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C6F762C80F64100F83FF3 /* CurrentlyView.swift */; };
 		2F8C6F7A2C80F72700F83FF3 /* CoreLocationUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F8C6F792C80F72700F83FF3 /* CoreLocationUI.framework */; };
 		2F8C6F7D2C80F75700F83FF3 /* OpenMeteoSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 2F8C6F7C2C80F75700F83FF3 /* OpenMeteoSdk */; };
+		2F8C6F812C84F0EC00F83FF3 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F8C6F802C84F0EC00F83FF3 /* Charts.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +34,8 @@
 		2F8C6F742C80F63100F83FF3 /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
 		2F8C6F762C80F64100F83FF3 /* CurrentlyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyView.swift; sourceTree = "<group>"; };
 		2F8C6F792C80F72700F83FF3 /* CoreLocationUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocationUI.framework; path = System/Library/Frameworks/CoreLocationUI.framework; sourceTree = SDKROOT; };
-		2F8C6F7E2C80FCC700F83FF3 /* weatherfinal_proj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = weatherfinal_proj.app; path = "/Users/mgauvrit/42Projects/PiscineMobile/SwiftProjects/mobileModule03/weatherfinal_proj/build/Debug-iphoneos/weatherfinal_proj.app"; sourceTree = "<absolute>"; };
+		2F8C6F7F2C84F0BF00F83FF3 /* weatherfinal_proj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = weatherfinal_proj.app; path = "/Users/mgauvrit/42Projects/PiscineMobile/SwiftProjects/mobileModule03/build/Debug-iphoneos/weatherfinal_proj.app"; sourceTree = "<absolute>"; };
+		2F8C6F802C84F0EC00F83FF3 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = System/Library/Frameworks/Charts.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F8C6F812C84F0EC00F83FF3 /* Charts.framework in Frameworks */,
 				2F8C6F7D2C80F75700F83FF3 /* OpenMeteoSdk in Frameworks */,
 				2F8C6F7A2C80F72700F83FF3 /* CoreLocationUI.framework in Frameworks */,
 			);
@@ -101,6 +104,7 @@
 		2F8C6F782C80F72600F83FF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2F8C6F802C84F0EC00F83FF3 /* Charts.framework */,
 				2F8C6F792C80F72700F83FF3 /* CoreLocationUI.framework */,
 			);
 			name = Frameworks;
@@ -126,7 +130,7 @@
 				2F8C6F7C2C80F75700F83FF3 /* OpenMeteoSdk */,
 			);
 			productName = weatherfinal_proj;
-			productReference = 2F8C6F7E2C80FCC700F83FF3 /* weatherfinal_proj.app */;
+			productReference = 2F8C6F7F2C84F0BF00F83FF3 /* weatherfinal_proj.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

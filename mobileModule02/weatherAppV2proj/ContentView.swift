@@ -80,6 +80,7 @@ struct HomeView: View {
                                     let cityInfoFetching = await fetchCityInfo(city: city)
                                     locationManager.cityInfo = cityInfoFetching
                                 }
+                                hasFetchedData = true
                                 inputText = ""
                                 suggestions.removeAll()
                             }

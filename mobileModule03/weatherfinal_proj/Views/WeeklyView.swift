@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Charts
 
 //In your third tab “Weekly” you will have to display:
 //• The location (city name, region and country).
@@ -70,6 +71,27 @@ struct WeeklyView: View {
                     .padding()
 
                 }
+                
+                let data = [
+                        (date: Date(), value: 10),
+                        (date: Calendar.current.date(byAdding: .day, value: 1, to: Date())!, value: 30),
+                        (date: Calendar.current.date(byAdding: .day, value: 2, to: Date())!, value: 20),
+                        (date: Calendar.current.date(byAdding: .day, value: 3, to: Date())!, value: 40),
+                        (date: Calendar.current.date(byAdding: .day, value: 4, to: Date())!, value: 25)
+                    ]
+                
+                Chart {
+                    ForEach(data, id: \.date) { entry in
+                        LineMark(
+                            x: .value("Date", entry.date),
+                            y: .value("Value", entry.value)
+                        )
+                        .foregroundStyle(.blue)
+                        .symbol(Circle().strokeBorder(lineWidth: 2))
+                    }
+                }
+                .frame(height: 300)
+                .padding()
                 
                 Spacer()
                 
