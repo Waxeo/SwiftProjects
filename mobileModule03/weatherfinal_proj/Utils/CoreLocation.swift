@@ -33,7 +33,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func requestLocation() {
         locationManager.requestWhenInUseAuthorization()
-        print("Geolocation : \(userLocStatus.debugDescription)")
+//        print("Geolocation : \(userLocStatus.debugDescription)")
         if (userLocStatus != nil) {
             if (userLocStatus == .authorizedWhenInUse || userLocStatus == .authorizedAlways) {
                 locationManager.startUpdatingLocation()
@@ -55,7 +55,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             
         } else {
-            print("Invalid City")
+//            print("Invalid City")
         }
     }
     
@@ -66,13 +66,13 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
             
             guard error == nil else {
-                print("*** Error in \(#function): \(error!.localizedDescription)")
+//                print("*** Error in \(#function): \(error!.localizedDescription)")
                 completion(nil)
                 return
             }
             
             guard let placemark = placemarks?[0] else {
-                print("*** Error in \(#function): placemark is nil")
+//                print("*** Error in \(#function): placemark is nil")
                 completion(nil)
                 return
             }
@@ -106,7 +106,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("STARTING FILL USER LOCATION !")
+//        print("STARTING FILL USER LOCATION !")
         guard let latestLocation = locations.first else { return }
         locationManager.stopUpdatingLocation()
         
@@ -131,21 +131,21 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 if let cityTimezone = placemark.timeZone {
                     self.cityLocation?.timezone = cityTimezone.identifier
                 }
-                print(placemark.country! + " | " + placemark.administrativeArea! + " | " + placemark.locality! + " | " + placemark.timeZone!.identifier)
-                print("ENDING FETCHING REAL POS INFO :")
+//                print(placemark.country! + " | " + placemark.administrativeArea! + " | " + placemark.locality! + " | " + placemark.timeZone!.identifier)
+//                print("ENDING FETCHING REAL POS INFO :")
                 
                 Task {
                     let fetchedCityInfo = await fetchCityInfo(city: self.cityLocation!)
                     DispatchQueue.main.async {
                         self.cityInfo = fetchedCityInfo
-                        print(self.cityLocation ?? "cityLocation nil")
-                        print(self.cityInfo ?? "cityInfo nil")
+//                        print(self.cityLocation ?? "cityLocation nil")
+//                        print(self.cityInfo ?? "cityInfo nil")
                     }
                 }
-                print("========================================")
+//                print("========================================")
             }
         }
-        print("ENDING FILL USER LOCATION !")
+//        print("ENDING FILL USER LOCATION !")
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {

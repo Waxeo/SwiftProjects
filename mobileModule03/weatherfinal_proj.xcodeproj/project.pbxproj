@@ -23,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F3503E72C96E7E00027F179 /* weatherfinal_proj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weatherfinal_proj.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F8C6F5B2C80F4B900F83FF3 /* weatherfinal_projApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weatherfinal_projApp.swift; sourceTree = "<group>"; };
 		2F8C6F5D2C80F4B900F83FF3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2F8C6F5F2C80F4BA00F83FF3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -34,7 +35,6 @@
 		2F8C6F742C80F63100F83FF3 /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
 		2F8C6F762C80F64100F83FF3 /* CurrentlyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyView.swift; sourceTree = "<group>"; };
 		2F8C6F792C80F72700F83FF3 /* CoreLocationUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocationUI.framework; path = System/Library/Frameworks/CoreLocationUI.framework; sourceTree = SDKROOT; };
-		2F8C6F7F2C84F0BF00F83FF3 /* weatherfinal_proj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = weatherfinal_proj.app; path = "/Users/mgauvrit/42Projects/PiscineMobile/SwiftProjects/mobileModule03/build/Debug-iphoneos/weatherfinal_proj.app"; sourceTree = "<absolute>"; };
 		2F8C6F802C84F0EC00F83FF3 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = System/Library/Frameworks/Charts.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -57,6 +57,7 @@
 			children = (
 				2F8C6F5A2C80F4B900F83FF3 /* weatherfinal_proj */,
 				2F8C6F782C80F72600F83FF3 /* Frameworks */,
+				2F3503E72C96E7E00027F179 /* weatherfinal_proj.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,7 +131,7 @@
 				2F8C6F7C2C80F75700F83FF3 /* OpenMeteoSdk */,
 			);
 			productName = weatherfinal_proj;
-			productReference = 2F8C6F7F2C84F0BF00F83FF3 /* weatherfinal_proj.app */;
+			productReference = 2F3503E72C96E7E00027F179 /* weatherfinal_proj.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

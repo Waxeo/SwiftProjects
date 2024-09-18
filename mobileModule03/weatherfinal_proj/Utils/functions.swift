@@ -23,7 +23,7 @@ func searchCities(_ inputText: String, completion: @escaping ([City]) -> Void) {
         if let data = data {
             do {
                 if let jsonString = String(data: data, encoding: .utf8) {
-                    print("JSON Response: \(jsonString)")
+//                    print("JSON Response: \(jsonString)")
                 }
                 let decodedResponse = try JSONDecoder().decode(CityResponse.self, from: data)
                 DispatchQueue.main.async {
@@ -44,10 +44,10 @@ func searchCities(_ inputText: String, completion: @escaping ([City]) -> Void) {
     task.resume()
 }
 
-func getWeatherDescription(weather_code: Int8) -> WeatherInfo? {
-    
-    return (WeatherMap.data["\(weather_code)"] ?? nil)
-}
+//func getWeatherDescription(weather_code: Int8) -> WeatherInfo? {
+//    
+//    return (WeatherMap.data["\(weather_code)"] ?? nil)
+//}
 
 func fetchCityInfo(city: City) async -> CityInfo? {
     var cityInfo = CityInfo(city: city)
@@ -81,4 +81,59 @@ func fetchCityInfo(city: City) async -> CityInfo? {
     }
     
     return nil
+}
+
+// Fonction pour obtenir l'interprétation d'un code
+func wmoCode(_ code: Int8?) -> WMOInterpretation {
+    if let code = code, let interpretation = WMO_CODES[code] {
+        return interpretation
+    }
+    return WMOInterpretation(color: "#FFFFFF", description: "...", icon: "")
+}
+
+func convertToHourlyEntries(hourlyData: HourlyData) -> [HourlyEntry] {
+    var entries: [HourlyEntry] = []
+        
+    for index in 0..<24 {
+        let entry = HourlyEntry(
+            hour: extractTime(from: hourlyData.time[index])!,
+            temperature: hourlyData.temperature_2m[index]
+        )
+        entries.append(entry)
+    }
+    
+    return entries
+}
+
+func extractTime(from dateTimeString: String) -> String? {
+    // Créer un DateFormatter pour analyser la chaîne de date-heure
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+    
+    // Convertir la chaîne en Date
+    guard let date = dateFormatter.date(from: dateTimeString) else {
+        return nil
+    }
+    
+    // Créer un DateFormatter pour extraire l'heure
+    let timeFormatter = DateFormatter()
+    timeFormatter.dateFormat = "HH:mm"
+    
+    // Convertir la date en chaîne de caractères avec le format d'heure
+    return timeFormatter.string(from: date)
+}
+
+func convertToWeeklyEntries(weeklyData: WeeklyData) -> [WeeklyEntry] {
+    var entries: [WeeklyEntry] = []
+        
+    for index in 0..<7 {
+        let entry = WeeklyEntry(
+            day: weeklyData.time[index],
+            temperature_max: weeklyData.temperature_2m_max[index],
+            temperature_min: weeklyData.temperature_2m_min[index]
+        )
+        entries.append(entry)
+    }
+    
+    return entries
 }

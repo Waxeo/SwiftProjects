@@ -26,81 +26,92 @@ struct WeeklyView: View {
 //    - il a bien cherché, MAIS le fetch a eu un soucis, message d'erreur - lié a connexion internet
     
     var body: some View {
-        VStack {
-            if hasFetchedData == false {
-                Text("Please search for a city or enable geolocation.")
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.center)
-            } else if (cityInfo?.city != nil && cityInfo?.current != nil) {
-                HStack {
-                    Image(systemName: "mappin.and.ellipse")
-                        .renderingMode(.original)
-                        .font(.title)
+        ZStack {
+            BackgroundView()
+            VStack {
+                if hasFetchedData == false {
+                    Text("Please search for a city or enable geolocation.")
+                        .foregroundColor(.black)
+                        .multilineTextAlignment(.center)
+                } else if (cityInfo?.city != nil && cityInfo?.current != nil) {
+                                        
+                    HStack {
+                        Image(systemName: "mappin.and.ellipse")
+                            .renderingMode(.original)
+                            .font(.title)
+                        
+                        Text("\(cityInfo?.city?.name ?? "Unknow"), \(cityInfo?.city?.admin1 ?? ""), \(cityInfo?.city?.country ?? "")")
+                            .font(.title2)
+                    }
                     
-                    Text("\(cityInfo?.city?.name ?? "Unknow"), \(cityInfo?.city?.admin1 ?? ""), \(cityInfo?.city?.country ?? "")")
-                        .font(.title2)
-                }
-                
-                Spacer()
-                
-                ScrollView(.horizontal) {
-                    LazyHStack {
-                        ForEach(0..<7, id: \.self) { index in
-                            VStack {
-                                
-                                Text("\(cityInfo?.daily?.time[index] ?? "Unknown")")
-                                
-                                if let temperature = cityInfo?.daily?.temperature_2m_max[index] {
-                                    Text("Max:\(String(format: "%.1f", temperature))°C")
-                                }
-                                
-                                if let windSpeed = cityInfo?.daily?.temperature_2m_min[index] {
-                                    Text("Min:\(String(format: "%.1f", windSpeed))°C")
-                                }
-                                
-                                if let weatherCode = cityInfo?.daily?.weather_code[index] {
-                                    Text("\(getWeatherDescription(weather_code: weatherCode)?.dayDescription ?? "")")
-                                }
-                
-                            }
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(8)
+                    let data = convertToWeeklyEntries(weeklyData: (cityInfo?.daily)!)
+                    
+                    Chart(data, id: \.day) { entry in
+                        Plot {
+                            LineMark(
+                                x: .value("Hour", entry.day),
+                                y: .value("Temperature", entry.temperature_max)
+                            )
+                            .foregroundStyle(by: .value("Temperature", "max"))
+                            
+                            LineMark(
+                                x: .value("Hour", entry.day),
+                                y: .value("Temperature", entry.temperature_min)
+                            )
+                            .foregroundStyle(by: .value("Temperature", "min"))
                         }
+                        .interpolationMethod(.catmullRom)
                     }
-                    .padding()
+                    .chartForegroundStyleScale(["max": .red, "min":.blue])
+                    .frame(height: 300)
+                    .padding(.horizontal)
+                                        
+                    ScrollView(.horizontal) {
+                        LazyHStack {
+                            ForEach(0..<7, id: \.self) { index in
+                                VStack {
+                                    
+                                    Text("\(cityInfo?.daily?.time[index] ?? "Unknown")")
+                                    
+                                    if let weatherCode = cityInfo?.daily?.weather_code[index] {
+                                        let interpretation = wmoCode(weatherCode)
+                                        
+                                        Image("\(interpretation.icon)")
+                                            .resizable()  // Rendre l'image redimensionnable
+                                            .scaledToFit()
+                                            .background(Color.clear.opacity(0))
+                                            .frame(width: 30, height: 30)
+                                    }
+                                    
+                                    if let max = cityInfo?.daily?.temperature_2m_max[index] {
+                                        Text("Max:\(String(format: "%.1f", max))°C")
+                                            .foregroundColor(.red)
+                                    }
+                                    
+                                    if let min = cityInfo?.daily?.temperature_2m_min[index] {
+                                        Text("Min:\(String(format: "%.1f", min))°C")
+                                            .foregroundColor(.blue)
+                                    }
 
-                }
-                
-                let data = [
-                        (date: Date(), value: 10),
-                        (date: Calendar.current.date(byAdding: .day, value: 1, to: Date())!, value: 30),
-                        (date: Calendar.current.date(byAdding: .day, value: 2, to: Date())!, value: 20),
-                        (date: Calendar.current.date(byAdding: .day, value: 3, to: Date())!, value: 40),
-                        (date: Calendar.current.date(byAdding: .day, value: 4, to: Date())!, value: 25)
-                    ]
-                
-                Chart {
-                    ForEach(data, id: \.date) { entry in
-                        LineMark(
-                            x: .value("Date", entry.date),
-                            y: .value("Value", entry.value)
-                        )
-                        .foregroundStyle(.blue)
-                        .symbol(Circle().strokeBorder(lineWidth: 2))
+                                }
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(8)
+                            }
+                        }
+                        .padding()
                     }
+                    .frame(height: 150) // Définit une hauteur spécifique pour la liste
+//                    .padding(.bottom, 20)
+                    
+                } else {
+                    Text("Failed to fetch data.\nPlease check your internet connection.")
+                        .background(Color.red)
+                        .cornerRadius(8)
+                        .multilineTextAlignment(.center)
                 }
-                .frame(height: 300)
-                .padding()
-                
-                Spacer()
-                
-            } else {
-                Text("Failed to fetch data.\nPlease check your internet connection.")
-                    .background(Color.red)
-                    .cornerRadius(8)
-                    .multilineTextAlignment(.center)
             }
         }
     }
 }
+

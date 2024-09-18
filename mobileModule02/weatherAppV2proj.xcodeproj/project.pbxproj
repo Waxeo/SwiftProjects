@@ -32,7 +32,7 @@
 		2F2E0F592C6BA1E80014BCDA /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
 		2F2E0F5B2C6BA1F80014BCDA /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		2F2E0F5E2C6BAE3D0014BCDA /* CoreLocationUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocationUI.framework; path = System/Library/Frameworks/CoreLocationUI.framework; sourceTree = SDKROOT; };
-		2F4B46642C85B6BC00ACE43F /* weatherAppV2proj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = weatherAppV2proj.app; path = "/Users/mgauvrit/42Projects/PiscineMobile/SwiftProjects/mobileModule02/build/Debug-iphoneos/weatherAppV2proj.app"; sourceTree = "<absolute>"; };
+		2F6D18212C85D93A00D1B062 /* weatherAppV2proj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = weatherAppV2proj.app; path = "/Users/mgauvrit/42Projects/PiscineMobile/SwiftProjects/mobileModule02/build/Debug-iphoneos/weatherAppV2proj.app"; sourceTree = "<absolute>"; };
 		2F7CBB122C70CEE70023A2F5 /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,7 +126,7 @@
 				2F7CBB102C70B9AB0023A2F5 /* OpenMeteoSdk */,
 			);
 			productName = weatherAppV2proj;
-			productReference = 2F4B46642C85B6BC00ACE43F /* weatherAppV2proj.app */;
+			productReference = 2F6D18212C85D93A00D1B062 /* weatherAppV2proj.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

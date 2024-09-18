@@ -14,59 +14,117 @@ import SwiftUI
 //• The current weather description (cloudy, sunny, rainy, etc.).
 //• the current wind speed (in km/h).
 
+
 struct CurrentlyView: View {
-    
+
     var cityInfo: CityInfo?
     var hasFetchedData: Bool
-    
-//    Trois possibilitées:
-//    - l'utilisateur n'a pas encore fetch des données, auquel cas pas de data mais un petit message pour demander a chercher une location
-//    - il a cherché et tout s'est bien passé auquel cas on affiche les données
-//    - il a bien cherché, MAIS le fetch a eu un soucis, message d'erreur - lié a connexion internet
-    
+
     var body: some View {
-        VStack {
-            if hasFetchedData == false {
-                Text("Please search for a city or enable geolocation.")
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.center)
-            } else if (cityInfo?.city != nil && cityInfo?.current != nil) {
-                HStack {
-                    Image(systemName: "mappin.and.ellipse")
-                        .renderingMode(.original)
-                        .font(.title)
+        ZStack {
+            BackgroundView()
+            
+            VStack {
+                if !hasFetchedData {
+                    Text("Please search for a city or enable geolocation.")
+                        .foregroundColor(.black)
+                        .multilineTextAlignment(.center)
+                        .background(Color.clear.opacity(0))
+
+                } else if let cityInfo = cityInfo, let currentWeather = cityInfo.current {
                     
-                    Text("\(cityInfo?.city?.name ?? "Unknow"), \(cityInfo?.city?.admin1 ?? ""), \(cityInfo?.city?.country ?? "")")
-                        .font(.title2)
-                }
-                
-                Spacer()
-                
-                HStack {
-                    if (cityInfo?.current?.temperature_2m != nil) {
-                        Text("\(String(format: "%.1f", cityInfo!.current!.temperature_2m))°C")
+                    GeometryReader { geometry in
+                        ScrollView {
+                            Spacer()
+                            VStack(spacing: 20) {
+                                
+                                VStack {
+                                    HStack {
+                                        Image(systemName: "mappin.and.ellipse")
+                                            .renderingMode(.original)
+                                            .background(Color.clear.opacity(0))
+                                            .font(.title)
+                                        
+                                        VStack(alignment: .leading) {
+                                            Text("\(cityInfo.city?.name ?? "Unknown"),")
+                                                .font(.custom("Copperplate", size: 28))
+                                                .background(Color.clear.opacity(0))
+                                            Text("\(cityInfo.city?.admin1 ?? ""), \(cityInfo.city?.country ?? "")")
+                                                .font(.custom("Copperplate", size: 28))
+                                                .background(Color.clear.opacity(0))
+                                        }
+                                    }
+                                    
+                                    Divider()
+                                        .frame(height: 50)
+                                        .padding(.horizontal)
+                                        .foregroundColor(.black.opacity(1))
+                                    
+                                    if let weatherCode = cityInfo.current?.weather_code {
+                                        let interpretation = wmoCode(weatherCode)
+                                        Image("\(interpretation.icon)")
+                                            .resizable()  // Rendre l'image redimensionnable
+                                            .scaledToFit()
+                                            .background(Color.clear.opacity(0))
+                                            .frame(width: 100, height: 100)
+                                        
+                                        Text("\(interpretation.description)")
+                                            .background(Color.clear.opacity(0))
+                                            .font(.title)
+                                        
+                                        Divider()
+                                            .frame(height: 50)
+                                            .padding(.horizontal)
+                                            .foregroundColor(.black.opacity(1))
+                                        
+                                        
+                                        HStack {
+                                            Image(systemName: "wind")
+                                                .renderingMode(.original)
+                                                .background(Color.clear.opacity(0))
+                                                .font(.title)
+                                            
+                                            if (cityInfo.current?.wind_speed_10m != nil) {
+                                                Text("\(String(format: "%.1f", cityInfo.current!.wind_speed_10m)) km/h")
+                                                    .background(Color.clear.opacity(0))
+                                            }
+                                            
+                                            Divider()
+                                                .frame(height: 50)
+                                                .padding(.horizontal)
+                                                .foregroundColor(.black.opacity(1))
+                                            
+                                            if (cityInfo.current?.temperature_2m != nil) {
+                                                if (cityInfo.current!.temperature_2m >= 20) {
+                                                    Text("\(String(format: "%.1f", cityInfo.current!.temperature_2m))°C")
+                                                        .background(Color.clear.opacity(0))
+                                                        .foregroundColor(.red)
+                                                        .font(.title)
+                                                }
+                                                else {
+                                                    Text("\(String(format: "%.1f", cityInfo.current!.temperature_2m))°C")
+                                                        .background(Color.clear.opacity(0))
+                                                        .foregroundColor(.blue)
+                                                        .font(.title)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .frame(minHeight: geometry.size.height)
+                            .padding(.horizontal)
+                        }
+                        .backgroundStyle(Color.gray.opacity(0.05))
                     }
+                } else {
+                    Text("Failed to fetch data.\nPlease check your internet connection.")
+                        .background(Color.red)
+                        .cornerRadius(8)
+                        .multilineTextAlignment(.center)
                 }
-                HStack {
-                    if (cityInfo?.current?.weather_code != nil) {
-                        Text("\(getWeatherDescription(weather_code: cityInfo!.current!.weather_code)?.dayDescription ?? "")")
-                    }
-                }
-                HStack {
-                    if (cityInfo?.current?.wind_speed_10m != nil) {
-                        Text("\(String(format: "%.1f", cityInfo!.current!.wind_speed_10m)) km/h")
-                    }
-                }
-                
-                Spacer()
-                
-            } else {
-                Text("Failed to fetch data.\nPlease check your internet connection.")
-                    .background(Color.red)
-                    .cornerRadius(8)
-                    .multilineTextAlignment(.center)
             }
-                
+            .background(Color.clear.opacity(0))
         }
     }
 }

@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import UIKit
+import SwiftUI
 
-// Structure pour récuperer la réponse JSON de l'api Geocoding
+// Structure pour récuperer la réponse JSON de l"api Geocoding
 struct City: Codable, Identifiable {
     var id: Int
     var name: String
@@ -177,42 +179,144 @@ struct WeeklyData: Codable {
     }
 }
 
-struct WeatherInfo {
-    let dayDescription: String
-    let nightDescription: String
-    let dayImageURL: String
-    let nightImageURL: String
+struct HourlyEntry: Identifiable {
+    var id = UUID()
+    var hour: String
+    var temperature: Double
 }
 
-struct WeatherMap {
-    static let data: [String: WeatherInfo] = [
-        "0": WeatherInfo(dayDescription: "Sunny", nightDescription: "Clear", dayImageURL: "http://openweathermap.org/img/wn/01d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/01n@2x.png"),
-        "1": WeatherInfo(dayDescription: "Mainly Sunny", nightDescription: "Mainly Clear", dayImageURL: "http://openweathermap.org/img/wn/01d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/01n@2x.png"),
-        "2": WeatherInfo(dayDescription: "Partly Cloudy", nightDescription: "Partly Cloudy", dayImageURL: "http://openweathermap.org/img/wn/02d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/02n@2x.png"),
-        "3": WeatherInfo(dayDescription: "Cloudy", nightDescription: "Cloudy", dayImageURL: "http://openweathermap.org/img/wn/03d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/03n@2x.png"),
-        "45": WeatherInfo(dayDescription: "Foggy", nightDescription: "Foggy", dayImageURL: "http://openweathermap.org/img/wn/50d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/50n@2x.png"),
-        "48": WeatherInfo(dayDescription: "Rime Fog", nightDescription: "Rime Fog", dayImageURL: "http://openweathermap.org/img/wn/50d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/50n@2x.png"),
-        "51": WeatherInfo(dayDescription: "Light Drizzle", nightDescription: "Light Drizzle", dayImageURL: "http://openweathermap.org/img/wn/09d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/09n@2x.png"),
-        "53": WeatherInfo(dayDescription: "Drizzle", nightDescription: "Drizzle", dayImageURL: "http://openweathermap.org/img/wn/09d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/09n@2x.png"),
-        "55": WeatherInfo(dayDescription: "Heavy Drizzle", nightDescription: "Heavy Drizzle", dayImageURL: "http://openweathermap.org/img/wn/09d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/09n@2x.png"),
-        "56": WeatherInfo(dayDescription: "Light Freezing Drizzle", nightDescription: "Light Freezing Drizzle", dayImageURL: "http://openweathermap.org/img/wn/09d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/09n@2x.png"),
-        "57": WeatherInfo(dayDescription: "Freezing Drizzle", nightDescription: "Freezing Drizzle", dayImageURL: "http://openweathermap.org/img/wn/09d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/09n@2x.png"),
-        "61": WeatherInfo(dayDescription: "Light Rain", nightDescription: "Light Rain", dayImageURL: "http://openweathermap.org/img/wn/10d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/10n@2x.png"),
-        "63": WeatherInfo(dayDescription: "Rain", nightDescription: "Rain", dayImageURL: "http://openweathermap.org/img/wn/10d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/10n@2x.png"),
-        "65": WeatherInfo(dayDescription: "Heavy Rain", nightDescription: "Heavy Rain", dayImageURL: "http://openweathermap.org/img/wn/10d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/10n@2x.png"),
-        "66": WeatherInfo(dayDescription: "Light Freezing Rain", nightDescription: "Light Freezing Rain", dayImageURL: "http://openweathermap.org/img/wn/10d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/10n@2x.png"),
-        "67": WeatherInfo(dayDescription: "Freezing Rain", nightDescription: "Freezing Rain", dayImageURL: "http://openweathermap.org/img/wn/10d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/10n@2x.png"),
-        "71": WeatherInfo(dayDescription: "Light Snow", nightDescription: "Light Snow", dayImageURL: "http://openweathermap.org/img/wn/13d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/13n@2x.png"),
-        "73": WeatherInfo(dayDescription: "Snow", nightDescription: "Snow", dayImageURL: "http://openweathermap.org/img/wn/13d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/13n@2x.png"),
-        "75": WeatherInfo(dayDescription: "Heavy Snow", nightDescription: "Heavy Snow", dayImageURL: "http://openweathermap.org/img/wn/13d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/13n@2x.png"),
-        "77": WeatherInfo(dayDescription: "Snow Grains", nightDescription: "Snow Grains", dayImageURL: "http://openweathermap.org/img/wn/13d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/13n@2x.png"),
-        "80": WeatherInfo(dayDescription: "Light Showers", nightDescription: "Light Showers", dayImageURL: "http://openweathermap.org/img/wn/09d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/09n@2x.png"),
-        "81": WeatherInfo(dayDescription: "Showers", nightDescription: "Showers", dayImageURL: "http://openweathermap.org/img/wn/09d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/09n@2x.png"),
-        "82": WeatherInfo(dayDescription: "Heavy Showers", nightDescription: "Heavy Showers", dayImageURL: "http://openweathermap.org/img/wn/09d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/09n@2x.png"),
-        "85": WeatherInfo(dayDescription: "Light Snow Showers", nightDescription: "Light Snow Showers", dayImageURL: "http://openweathermap.org/img/wn/13d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/13n@2x.png"),
-        "86": WeatherInfo(dayDescription: "Snow Showers", nightDescription: "Snow Showers", dayImageURL: "http://openweathermap.org/img/wn/13d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/13n@2x.png"),
-        "95": WeatherInfo(dayDescription: "Thunderstorm", nightDescription: "Thunderstorm", dayImageURL: "http://openweathermap.org/img/wn/11d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/11n@2x.png"),
-        "96": WeatherInfo(dayDescription: "Light Thunderstorms With Hail", nightDescription: "Light Thunderstorms With Hail", dayImageURL: "http://openweathermap.org/img/wn/11d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/11n@2x.png"),
-        "99": WeatherInfo(dayDescription: "Thunderstorm With Hail", nightDescription: "Thunderstorm With Hail", dayImageURL: "http://openweathermap.org/img/wn/11d@2x.png", nightImageURL: "http://openweathermap.org/img/wn/11n@2x.png")
+struct WeeklyEntry: Identifiable {
+    var id = UUID()
+    var day: String
+    var temperature_max: Double
+    var temperature_min: Double
+}
+
+// Structure pour l"interprétation WMO
+struct WMOInterpretation {
+    let color: Color
+    let description: String
+    let isDarkText: Bool
+    let icon: String
+
+    init(color: String, description: String, icon: String) {
+        self.color = Color(hex: color) // Vous devrez ajouter un initialiseur personnalisé pour Color hex
+        self.description = description
+        self.icon = "\(icon)"
+
+        // Détection de contraste pour définir la couleur du texte
+        let colorBackground = UIColor(Color(hex: color))
+        self.isDarkText = colorBackground.isDarkText()
+    }
+}
+
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        let scanner = Scanner(string: hex)
+        
+        if hex.hasPrefix("#") {
+            scanner.currentIndex = hex.index(after: hex.startIndex)
+        }
+        
+        var rgbValue: UInt64 = 0
+        scanner.scanHexInt64(&rgbValue)
+        
+        let r = Double((rgbValue & 0xFF0000) >> 16) / 255.0
+        let g = Double((rgbValue & 0x00FF00) >> 8) / 255.0
+        let b = Double(rgbValue & 0x0000FF) / 255.0
+        
+        self.init(red: r, green: g, blue: b)
+    }
+}
+
+extension UIColor {
+    func isDarkText() -> Bool {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        let brightness = ((red * 299) + (green * 587) + (blue * 114)) / 1000
+        return brightness < 0.5
+    }
+}
+
+let WMO_CODES: [Int8: WMOInterpretation] = [
+    0: WMOInterpretation(color: "#F1F1F1", description: "Clear", icon: "clear"),
+    1: WMOInterpretation(color: "#E2E2E2", description: "Mostly Clear", icon: "mostly-clear"),
+    2: WMOInterpretation(color: "#C6C6C6", description: "Partly Cloudy", icon: "partly-cloudy"),
+    3: WMOInterpretation(color: "#ABABAB", description: "Overcast", icon: "overcast"),
+    
+
+    45: WMOInterpretation(color:"#A4ACBA", description:"Fog", icon:"fog"),
+    48: WMOInterpretation(color:"#8891A4", description:"Icy Fog", icon:"rime-fog"),
+
+    51: WMOInterpretation(color:"#3DECEB", description:"Light Drizzle", icon:"light-drizzle"),
+    53: WMOInterpretation(color:"#0CCECE", description:"Drizzle", icon:"moderate-drizzle"),
+    55: WMOInterpretation(color:"#0AB1B1", description:"Heavy Drizzle", icon:"dense-drizzle"),
+
+    80: WMOInterpretation(color:"#9BCCFD", description:"Light Showers", icon:"light-rain"),
+    81: WMOInterpretation(color:"#51B4FF", description:"Showers", icon:"moderate-rain"),
+    82: WMOInterpretation(color:"#029AE8", description:"Heavy Showers", icon:"heavy-rain"),
+
+    61: WMOInterpretation(color:"#BFC3FA", description:"Light Rain", icon:"light-rain"),
+    63: WMOInterpretation(color:"#9CA7FA", description:"Rain", icon:"moderate-rain"),
+    65: WMOInterpretation(color:"#748BF8", description:"Heavy Rain", icon:"heavy-rain"),
+
+    56: WMOInterpretation(color:"#D3BFE8", description:"Light Freezing Drizzle", icon:"light-freezing-drizzle"),
+    57: WMOInterpretation(color:"#A780D4", description:"Freezing Drizzle", icon:"dense-freezing-drizzle"),
+
+    66: WMOInterpretation(color:"#CAC1EE", description:"Light Freezing Rain", icon:"light-freezing-rain"),
+    67: WMOInterpretation(color:"#9486E1", description:"Freezing Rain", icon:"heavy-freezing-rain"),
+
+    71: WMOInterpretation(color:"#F9B1D8", description:"Light Snow", icon:"slight-snowfall"),
+    73: WMOInterpretation(color:"#F983C7", description:"Snow", icon:"moderate-snowfall"),
+    75: WMOInterpretation(color:"#F748B7", description:"Heavy Snow", icon:"heavy-snowfall"),
+
+    77: WMOInterpretation(color:"#E7B6EE", description:"Snow Grains", icon:"snowflake"),
+
+    85: WMOInterpretation(color:"#E7B6EE", description:"Light Snow Showers", icon:"slight-snowfall"),
+    86: WMOInterpretation(color:"#CD68E0", description:"Snow Showers", icon:"heavy-snowfall"),
+
+    95: WMOInterpretation(color:"#525F7A", description:"Thunderstorm", icon:"thunderstorm"),
+
+    96: WMOInterpretation(color:"#3D475C", description:"Light T-storm w/ Hail", icon:"thunderstorm-with-hail"),
+    99: WMOInterpretation(color:"#2A3140", description:"T-storm w/ Hail", icon:"thunderstorm-with-hail")
+]
+
+struct weatherIcons {
+    static let data: [String: String] = [
+        "Sunny": "sun.max",
+        "Mainly Sunny": "sun.min",
+        "Partly Cloudy": "cloud.sun.fill",
+        "Cloudy": "cloud.fill",
+        "Foggy": "cloud.fog",
+        "Rime Fog": "cloud.fog.fill",
+        "Light Drizzle": "cloud.drizzle",
+        "Drizzle": "cloud.drizzle.fill",
+        "Heavy Drizzle": "cloud.drizzle.circle.fill",
+        "Light Freezing Drizzle": "cloud.sleet",
+        "Freezing Drizzle": "cloud.sleet.fill",
+        "Light Rain": "cloud.rain",
+        "Rain": "cloud.rain.fill",
+        "Heavy Rain": "cloud.heavyrain",
+        "Light Freezing Rain": "cloud.sleet",
+        "Freezing Rain": "cloud.sleet.fill",
+        "Light Snow": "snowflake",
+        "Snow": "snowflake",
+        "Heavy Snow": "snowflake",
+        "Snow Grains": "cloud.hail",
+        "Light Showers": "cloud.rain",
+        "Showers": "cloud.rain",
+        "Heavy Showers": "cloud.rain",
+        "Light Snow Showers": "cloud.snow.fill",
+        "Snow Showers": "cloud.snow.fill",
+        "Thunderstorm": "cloud.bolt.rain.fill",
+        "Light Thunderstorms With Hail": "cloud.bolt.rain.fill",
+        "Thunderstorm With Hail": "cloud.bolt.rain.fill"
     ]
 }
+
