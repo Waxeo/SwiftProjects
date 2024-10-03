@@ -9,7 +9,26 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        Text("Well redirected and token obtained !")
+        ZStack {
+            VStack {
+                
+                TabView {
+                    ProfilePageView()
+                        .tabItem {
+                            Image(systemName: "person.crop.circle.fill")
+                            Text("Profile")
+                        }
+                    
+                    CalendarView()
+                        .tabItem {
+                            Image(systemName: "calendar")
+                            Text("Calendar")
+                            
+                        }
+                }
+                
+            }
+        }
     }
 }
 

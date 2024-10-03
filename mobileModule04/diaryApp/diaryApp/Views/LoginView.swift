@@ -10,18 +10,13 @@ import SwiftUI
 struct LoginView: View {
     var body: some View {
         ZStack {
-            Color.black
-                .ignoresSafeArea()
+
             VStack {
-                Text("Please select a connexion service")
-                    .foregroundColor(.white)
-                    .font(.largeTitle)
-                    .multilineTextAlignment(.center)
                 
                 Spacer()
                 
                 Button(action: {
-                    gitHubConnexion()
+                    User.shared.gitHubConnexion()
                 }) {
                     HStack {
                         Image("github")
@@ -29,16 +24,17 @@ struct LoginView: View {
                             .frame(width: 75.0, height: 75.0)
                             .scaledToFit()
                         Text("Continue with GitHub")
-                            .foregroundColor(.white)
+                            .foregroundColor(.black)
                             .font(.title2)
                     }
                 }
+                .navigationTitle("Select a connexion service")
                 .buttonStyle(.bordered)
                 .tint(.blue)
                 .padding()
                 
                 Button(action: {
-                    Task { await googleConnexion() }
+                    Task { await User.shared.googleConnexion() }
                 }) {
                     HStack {
                         Image("googleIcon")
@@ -46,7 +42,7 @@ struct LoginView: View {
                             .frame(width: 75.0, height: 75.0)
                             .scaledToFit()
                         Text("Continue with Google")
-                            .foregroundColor(.white)
+                            .foregroundColor(.black)
                             .font(.title2)
                     }
                 }
@@ -58,6 +54,7 @@ struct LoginView: View {
                 Spacer()
             }
         }
+        .navigationTitle("Please select a connexion service")
     }
 }
 

@@ -11,6 +11,7 @@ import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
 import GoogleSignInSwift
+import FirebaseFirestore
 
 @main
 struct diaryAppApp: App {
@@ -20,6 +21,7 @@ struct diaryAppApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(Data())
                 .onOpenURL { url in
                     print("Received URL: \(url)")
                     // Verifie si l'URL correspond à l'URI de redirection
@@ -31,7 +33,7 @@ struct diaryAppApp: App {
                         if let code = url.valueOf("code") {
                             print("Ready to exchange code: \(code)")
                             // Appelle ici la fonction pour échanger le code contre un access token
-                            exchangeCodeForToken(code: code)
+                            User.shared.exchangeCodeForToken(code: code)
                         }
                     }
                 }
@@ -39,8 +41,47 @@ struct diaryAppApp: App {
     }
 }
 
+class AppDelegate: UIResponder, UIApplicationDelegate {
+        
+    func application(_ application: UIApplication,
+                       didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
 
-// User essaye de se login a un des services proposés -- ajouter une view de sélection des services (google, github)
-// Une fois le choix de service validé, ouvrir la page safari du service pour connecter le compte associé ce qui nous donnera le AUTHCODE
-// Avec le AUTHCODE on va chercher l'acces token qui nous servira a request au serveur de ressources les ressources demandées
-// le point précédent se fait en meme temps que l'application charge la page de callback une fois que le user a validé la connexion depuis son compte du service choisi
+    // use to debug
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        print("Received URL: \(url.absoluteString)")
+        
+        // Vérifie si l'URL correspond à l'URI de redirection
+        if url.scheme == "diaryApp" {
+            print("Correct scheme detected")
+            
+            if url.host == "callback" {
+                print("Correct host detected")
+                
+                // Extraire le code de l'URL
+                if let code = url.valueOf("code") {
+                    print("Code extracted: \(code)")
+                    // Passer le code à la requête pour obtenir le token
+                    User.shared.exchangeCodeForToken(code: code)
+                } else {
+                    print("Code not found in URL")
+                }
+            } else {
+                print("Incorrect host")
+            }
+        } else {
+            print("Incorrect scheme")
+        }
+        return true
+    }
+}
+
+extension URL {
+    func valueOf(_ queryParamaterName: String) -> String? {
+        let url = URLComponents(string: self.absoluteString)
+        return url?.queryItems?.first(where: { $0.name == queryParamaterName })?.value
+    }
+}

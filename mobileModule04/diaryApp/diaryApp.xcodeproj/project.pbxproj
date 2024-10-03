@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F11832D2CAB0F6100814BD6 /* ProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F11832C2CAB0F6100814BD6 /* ProfilePageView.swift */; };
+		2F11832F2CAB0F7100814BD6 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F11832E2CAB0F7100814BD6 /* CalendarView.swift */; };
 		2F72B1FC2CA42904007AE805 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F72B1FB2CA42903007AE805 /* HomeView.swift */; };
-		2F72B1FE2CA43707007AE805 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F72B1FD2CA43707007AE805 /* Functions.swift */; };
+		2F72B1FE2CA43707007AE805 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F72B1FD2CA43707007AE805 /* User.swift */; };
 		2F72B2012CA592D3007AE805 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2F72B2002CA592D3007AE805 /* FirebaseAuth */; };
 		2F72B2032CA592D3007AE805 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 2F72B2022CA592D3007AE805 /* FirebaseDatabase */; };
 		2F72B2052CA592D3007AE805 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 2F72B2042CA592D3007AE805 /* FirebaseFirestore */; };
@@ -20,15 +22,17 @@
 		2FE026F12C9C62AB008E0AEF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE026F02C9C62AB008E0AEF /* ContentView.swift */; };
 		2FE026F32C9C62AC008E0AEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FE026F22C9C62AC008E0AEF /* Assets.xcassets */; };
 		2FE026F62C9C62AC008E0AEF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FE026F52C9C62AC008E0AEF /* Preview Assets.xcassets */; };
-		2FE026FF2C9C6883008E0AEF /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE026FE2C9C6883008E0AEF /* Struct.swift */; };
+		2FE026FF2C9C6883008E0AEF /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE026FE2C9C6883008E0AEF /* Data.swift */; };
 		2FE027022C9C698E008E0AEF /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE027012C9C698E008E0AEF /* OAuthSwift */; };
 		2FE027052CA2CB83008E0AEF /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FE027042CA2CB83008E0AEF /* SafariServices.framework */; };
 		2FE027082CA2CC4B008E0AEF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE027072CA2CC4B008E0AEF /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F11832C2CAB0F6100814BD6 /* ProfilePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageView.swift; sourceTree = "<group>"; };
+		2F11832E2CAB0F7100814BD6 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		2F72B1FB2CA42903007AE805 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		2F72B1FD2CA43707007AE805 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		2F72B1FD2CA43707007AE805 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2F72B20F2CA596F5007AE805 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2FE026EB2C9C62AB008E0AEF /* diaryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = diaryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FE026EE2C9C62AB008E0AEF /* diaryAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryAppApp.swift; sourceTree = "<group>"; };
@@ -36,7 +40,7 @@
 		2FE026F22C9C62AC008E0AEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FE026F52C9C62AC008E0AEF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2FE026FC2C9C62C5008E0AEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		2FE026FE2C9C6883008E0AEF /* Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
+		2FE026FE2C9C6883008E0AEF /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		2FE027042CA2CB83008E0AEF /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		2FE027072CA2CC4B008E0AEF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,8 +107,8 @@
 		2FE026FD2C9C685A008E0AEF /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				2FE026FE2C9C6883008E0AEF /* Struct.swift */,
-				2F72B1FD2CA43707007AE805 /* Functions.swift */,
+				2FE026FE2C9C6883008E0AEF /* Data.swift */,
+				2F72B1FD2CA43707007AE805 /* User.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -122,6 +126,8 @@
 			children = (
 				2FE027072CA2CC4B008E0AEF /* LoginView.swift */,
 				2F72B1FB2CA42903007AE805 /* HomeView.swift */,
+				2F11832C2CAB0F6100814BD6 /* ProfilePageView.swift */,
+				2F11832E2CAB0F7100814BD6 /* CalendarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -213,10 +219,12 @@
 			files = (
 				2FE026F12C9C62AB008E0AEF /* ContentView.swift in Sources */,
 				2FE026EF2C9C62AB008E0AEF /* diaryAppApp.swift in Sources */,
+				2F11832F2CAB0F7100814BD6 /* CalendarView.swift in Sources */,
 				2FE027082CA2CC4B008E0AEF /* LoginView.swift in Sources */,
 				2F72B1FC2CA42904007AE805 /* HomeView.swift in Sources */,
-				2FE026FF2C9C6883008E0AEF /* Struct.swift in Sources */,
-				2F72B1FE2CA43707007AE805 /* Functions.swift in Sources */,
+				2FE026FF2C9C6883008E0AEF /* Data.swift in Sources */,
+				2F72B1FE2CA43707007AE805 /* User.swift in Sources */,
+				2F11832D2CAB0F6100814BD6 /* ProfilePageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
