@@ -15,7 +15,7 @@ struct ContentView: View {
         NavigationStack {
             VStack {
                 if user.isAuthenticated == true {
-                    HomeView()
+                    HomeView(isAuthenticated: $user.isAuthenticated)
                 } else {
                     ZStack{
                         BackgroundContentView()
